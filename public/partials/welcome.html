@@ -1,0 +1,19 @@
+<div class="container" ng-controller="WelcomeCtrl">
+  <h1></h1>
+  <button class="btn" id="logout-btn">Logout</button>
+</div>
+<script type="text/javascript">
+  dpd.users.me(function(user) {
+    if (user) {
+      $('h1').text("Welcome, " + user.username + "!");
+    } else {
+      location.href = "/";
+    }
+  });
+
+  $('#logout-btn').click(function() {
+    dpd.users.logout(function(res, err) {
+      location.href = "/";
+    });
+  });
+</script>
