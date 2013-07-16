@@ -1,11 +1,11 @@
 <div class="container" data-ng-controller="LoginCtrl">
 	<h1>Login</h1>
-	<form>
+	<form name="form-login" novalidate>
     <label for="username">Username:</label>
-    <input type="text" id="username" />
+    <input type="text" data-ng-model="user.username" required/>
     <label for="password">Password:</label>
-    <input type="password" id="password" /><br />
-    <button type="submit" class="btn btn-primary" data-ng-click="login()">Login</button>
+    <input type="password" data-ng-model="user.password" required/><br />
+    <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="login(user.username, user.password)">Login</button>
     <a href="/#!/register" class="btn btn-link">sign up</a>
   </form>
 </div>

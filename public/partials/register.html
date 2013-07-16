@@ -1,13 +1,13 @@
 <div class="container" data-ng-controller="RegisterCtrl">
   <h1>Register</h1>
-  <form>
+  <form name="form-registration" novalidate>
     <label for="username">Username:</label>
-    <input type="text" id="username" />
+    <input type="text" data-ng-model="user.username" required/>
     <label for="password">Password:</label>
-    <input type="password" id="password" />
+    <input type="password" data-ng-model="user.password" required/>
     <label for="confirm-password">Confirm Password:</label>
-    <input type="password" id="confirm-password" /><br />
-    <button type="submit" class="btn btn-primary" data-ng-click="singUp()">Sign up</button>
+    <input type="password" data-ng-model="user.confirmPassword" required/><br />
+    <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="singUp(user.username, user.password)">Sign up</button>
     <a href="/" class="btn btn-link">home</a>
   </form>
 </div>
