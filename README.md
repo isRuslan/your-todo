@@ -2,6 +2,11 @@ Todo-List
 =========
 
 Single page application of making todo-list.
+This is just a simple example of NoSQL application building with MongoDB and Node.js.
+
+1. Register a new profile;
+2. Make your own todo-list;
+3. Do all what you made in this list.
 
 Building
 ========
