@@ -64,12 +64,72 @@ todoApp.controller('TodoCtrl', function($scope, $http) {
 
 });
 
-todoApp.controller('LoginCtrl', function($scope, $http) {
+todoApp.controller('LoginCtrl', function($scope, $http, $location) {
+    $scope.login = login;
+
+    function login() {
+        var username = $('#username').val();
+        var password = $('#password').val();
+
+        $http.post('/users/login', {username: username, password: password})
+            .success(function(user) {
+                $location.path("/welcome");
+            }).error(function(err){
+               alert(err.message);
+            });
+        return false;
+    }
+
 });
 
-todoApp.controller('RegisterCtrl', function($scope, $http) {
+todoApp.controller('RegisterCtrl', function($scope, $http, $location) {
+    $scope.singUp = singUp;
+
+    function singUp() {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var confirmPassword = $('#confirm-password').val();
+
+        if (!username) {
+            alert("Username is required");
+        } else if (!password) {
+            alert("Password is required");
+        } else if (password !== confirmPassword) {
+            alert("Passwords do not match");
+        } else {
+            $http.post('/users', {username: username, password: password})
+                .success(function(user) {
+                    $http.post('/users/login', {username: username, password: password})
+                        .success(function(user) {
+                            $location.path("/welcome");
+                        }).error(function(err){
+                           alert(err.message);
+                        });
+                }).error(function(err){
+                   alert(JSON.stringify(err));
+                });
+        }
+        return false;        
+    }
+
 });
 
-todoApp.controller('WelcomeCtrl', function($scope, $http) {
+todoApp.controller('WelcomeCtrl', function($scope, $http, $location) {
+    $scope.userName = '';
+    $scope.logout = logout;
+
+    function logout() { 
+        $http.post('/users/logout')
+            .success(function(res) {
+                $location.path("/");
+            });
+    }
+
+    $http.get('/users/me')
+        .success(function(user) {
+            $scope.userName = user.username;
+        }).error(function(err){
+           $location.path("/");
+        });
 });
 

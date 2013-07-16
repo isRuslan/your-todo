@@ -1,33 +1,11 @@
-<div class="container" ng-controller="LoginCtrl">
+<div class="container" data-ng-controller="LoginCtrl">
 	<h1>Login</h1>
 	<form>
     <label for="username">Username:</label>
     <input type="text" id="username" />
     <label for="password">Password:</label>
     <input type="password" id="password" /><br />
-    <button type="submit" class="btn btn-primary">Login</button>
-    <a href="/register.html" class="btn btn-link">sign up</a>
+    <button type="submit" class="btn btn-primary" data-ng-click="login()">Login</button>
+    <a href="/#!/register" class="btn btn-link">sign up</a>
   </form>
 </div>
-<script type="text/javascript">
-  dpd.users.me(function(user) {
-    if (user) {
-      location.href = "/welcome.html";
-    }
-  });
-
-  $('form').submit(function() {
-    var username = $('#username').val();
-    var password = $('#password').val();
-
-    dpd.users.login({username: username, password: password}, function(session, error) {
-      if (error) {
-        alert(error.message);
-      } else {
-        location.href = "/welcome.html";
-      }
-    });
-
-    return false;
-  });
-</script>
