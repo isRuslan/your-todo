@@ -9,6 +9,6 @@ todoApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
 	    .when('/welcome', {templateUrl: 'partials/welcome.html', controller: 'WelcomeCtrl'})
 	    .otherwise({redirectTo: '/login'});
     $locationProvider
-	  .html5Mode(false);
-	  // .hashPrefix('!');
+	  .html5Mode(true);
+	  //.hashPrefix('!');
   }]);
