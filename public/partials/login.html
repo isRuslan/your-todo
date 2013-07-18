@@ -1,11 +1,17 @@
-<div class="container" data-ng-controller="LoginCtrl">
-	<h1>Login</h1>
-	<form name="form-login" novalidate>
-    <label for="username">Username:</label>
-    <input type="text" data-ng-model="user.username" required/>
-    <label for="password">Password:</label>
-    <input type="password" data-ng-model="user.password" required/><br />
-    <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="login(user.username, user.password)">Login</button>
-    <a href="/#!/register" class="btn btn-link">sign up</a>
-  </form>
+<div class="container-fluid" data-ng-controller="LoginCtrl">
+  <div class="hero-unit">
+    <h1>Hello</h1>
+    <p>This is a simple todo application.</p>
+    <p>Just <a href="/register">register</a> or login and make your own todo list.</p>
+    <p>
+	  <form name="form-login" novalidate>
+	    <label for="username">Username:</label>
+	    <input type="text" data-ng-model="user.username" required/>
+	    <label for="password">Password:</label>
+	    <input type="password" data-ng-model="user.password" required/><br />
+	    <button class="btn btn-primary" data-ng-disabled="form.$invalid || !user.username || !user.password" data-ng-click="login(user.username, user.password)">Login</button>
+	    <a href="/register" class="btn btn-link">sign up</a>
+	  </form>
+    </p>
+  </div>
 </div>

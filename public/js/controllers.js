@@ -1,38 +1,58 @@
-todoApp.controller('TodoCtrl', function($scope, $http) {
+todoApp.controller('TodoCtrl', function($scope, $http, $location) {
     /**
     * variables
     */
     $scope.todos = [];
+    $scope.userName = null;
+    $scope.userId = null;
     /**
     * functions
     */
+    $scope.getUser = getUser;
+    $scope.getTodos = getTodos;
     $scope.addTodo = addTodo;
     $scope.changeCompleted = changeCompleted;
     $scope.removeCompletedItems = removeCompletedItems;
+    $scope.logout = logout;
 
-    // Get all todos
-    $http.get('/todos')
-        .success(function(todos) {
+    getUser();
+
+    function getUser() {
+        $http.get('/users/me').success(function(user) {
+            $scope.userName = user.username;
+            $scope.userId = user.id;
+            getTodos(user.id);
+        }).error(function(err){
+           $location.path("/");
+        });
+    }
+
+    function getTodos(userId) {
+        $http.get('/todos', {
+            params: {
+                ownerId: userId
+            }
+        }).success(function(todos) {
             $scope.loaded = true;
             $scope.todos = todos;
         }).error(function(err) {
             alert(err);
         });
+    }
 
-    function addTodo(title) {
+    function addTodo(title, userId) {
         $http.post('/todos', {
-            title: title
+            title: title,
+            ownerId: userId
         }).success(function(todo) {
             $scope.newTodoTitle = '';
             $scope.todos.push(todo);
         }).error(function(err) {
-            // Alert if there's an error
             return alert(err.message || "an error occurred");
         });
     };
 
     function changeCompleted(todo) {
-        // Update the todo
         $http.put('/todos/' + todo.id, {
             completed: todo.completed
         }).error(function(err) {
@@ -56,7 +76,6 @@ todoApp.controller('TodoCtrl', function($scope, $http) {
                 completed: true
             }
         }).success(function() {
-            // Find the index of an object with a matching id
             var index = $scope.todos.indexOf(
                 $scope.todos.filter(function(t) {
                     return t.id === todo.id;
@@ -70,6 +89,11 @@ todoApp.controller('TodoCtrl', function($scope, $http) {
         });
     }
 
+    function logout() { 
+        $http.post('/users/logout').success(function(res) {
+            $location.path("/");
+        });
+    }
 });
 
 todoApp.controller('LoginCtrl', function($scope, $http, $location) {
@@ -79,12 +103,13 @@ todoApp.controller('LoginCtrl', function($scope, $http, $location) {
     $scope.login = login;
 
     function login(username, password) {
-        $http.post('/users/login', {username: username, password: password})
-            .success(function(user) {
-                $location.path("/welcome");
-            }).error(function(err){
-               alert(err.message);
-            });
+        $http.post('/users/login', {
+            username: username, password: password
+        }).success(function(user) {
+            $location.path("/todo");
+        }).error(function(err){
+           alert(err.message);
+        });
     }
 
 });
@@ -96,17 +121,21 @@ todoApp.controller('RegisterCtrl', function($scope, $http, $location) {
     $scope.singUp = singUp;
 
     function singUp(username, password) {
-        $http.post('/users', {username: username, password: password})
-            .success(function(user) {
-                $http.post('/users/login', {username: username, password: password})
-                    .success(function(user) {
-                        $location.path("/welcome");
-                    }).error(function(err){
-                       alert(err.message);
-                    });
+        $http.post('/users', {
+            username: username, 
+            password: password
+        }).success(function(user) {
+            $http.post('/users/login', {
+                username: username,
+                password: password
+            }).success(function(user) {
+                $location.path("/todo");
             }).error(function(err){
-               alert(JSON.stringify(err));
+               alert(err.message);
             });
+        }).error(function(err){
+           alert(JSON.stringify(err));
+        });
       
     }
 
@@ -123,17 +152,15 @@ todoApp.controller('WelcomeCtrl', function($scope, $http, $location) {
     $scope.logout = logout;
 
     function logout() { 
-        $http.post('/users/logout')
-            .success(function(res) {
-                $location.path("/");
-            });
+        $http.post('/users/logout').success(function(res) {
+            $location.path("/");
+        });
     }
 
-    $http.get('/users/me')
-        .success(function(user) {
-            $scope.userName = user.username;
-        }).error(function(err){
-           $location.path("/");
-        });
+    $http.get('/users/me').success(function(user) {
+        $scope.userName = user.username;
+    }).error(function(err){
+       $location.path("/");
+    });
 });
 

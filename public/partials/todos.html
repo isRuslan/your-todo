@@ -1,19 +1,26 @@
-<div class="container" data-ng-controller="TodoCtrl">
-  <h1>Todo list.</h1>
+<div class="container-fluid" data-ng-controller="TodoCtrl">
+  <h1>Todo list of {{userName}}.</h1>
   <p id="empty" ng-hide="todos.length || !loaded">You don't have any todos! Add one now:</p>
-  <ul id="todos" class="unstyled">
-    <li ng-repeat="todo in todos">
-      <label class="checkbox">
-        <input type="checkbox" ng-model="todo.completed" ng-change="changeCompleted(todo)" />
-        {{todo.title}}
-      </label>
-    </li>
-  </ul>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Mark</td>
+        <th>What do I need to do?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="todo in todos" data-ng-class="{success: todo.completed}">
+        <td>{{$index}}</td>
+        <td><input type="checkbox" data-ng-model="todo.completed" data-ng-change="changeCompleted(todo)" /></td>
+        <td class="span3">{{todo.title}}</td>
+      </tr>
+    </tbody>
+  </table>
   <form class="form-inline">
-    <input id="todo-title" type="text" ng-model="newTodoTitle" />
-    <button id="add-btn" class="btn btn-success" ng-click="addTodo(newTodoTitle)">Add</button>
+    <input id="todo-title" type="text" data-ng-model="newTodoTitle" />
+    <button id="add-btn" class="btn btn-inverse" data-ng-click="addTodo(newTodoTitle, userId)">Add</button>
   </form>
-  <p>
-    <a href id="remove-completed-btn" ng-click="removeCompletedItems()">Remove completed items</a>
-  </p>
+  <button class="btn btn-success" id="remove-completed-btn" ng-click="removeCompletedItems()">Remove completed items</button>
+  <button class="btn btn-danger" id="logout-btn" data-ng-click="logout()">Logout</button>
 </div>

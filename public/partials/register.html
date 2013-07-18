@@ -1,4 +1,4 @@
-<div class="container" data-ng-controller="RegisterCtrl">
+<div class="container-fluid" data-ng-controller="RegisterCtrl">
   <h1>Register</h1>
   <form name="form-registration" novalidate>
     <label for="username">Username:</label>
@@ -7,7 +7,7 @@
     <input type="password" data-ng-model="user.password" required/>
     <label for="confirm-password">Confirm Password:</label>
     <input type="password" data-ng-model="user.confirmPassword" required/><br />
-    <button class="btn btn-primary" data-ng-disabled="form.$invalid" data-ng-click="singUp(user.username, user.password)">Sign up</button>
+    <button class="btn btn-primary" data-ng-disabled="form.$invalid || !user.username || !user.password" data-ng-click="singUp(user.username, user.password)">Sign up</button>
     <a href="/" class="btn btn-link">home</a>
   </form>
 </div>

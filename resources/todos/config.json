@@ -1,13 +1,21 @@
 {
 	"type": "Collection",
 	"properties": {
+		"ownerId": {
+			"name": "ownerId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "ownerId",
+			"order": 0
+		},
 		"title": {
 			"name": "title",
 			"type": "string",
 			"typeLabel": "string",
 			"required": true,
 			"id": "title",
-			"order": 0
+			"order": 1
 		},
 		"completed": {
 			"name": "completed",
@@ -15,7 +23,7 @@
 			"typeLabel": "boolean",
 			"required": false,
 			"id": "completed",
-			"order": 1
+			"order": 2
 		}
 	}
 }
