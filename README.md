@@ -17,8 +17,9 @@ This is just a simple example of NoSQL application building with MongoDB and Nod
 
 - [Install] (http://deployd.com/download.html) deployd (Mac, Windows) <br /> 
 For linux, use terminal:<br />
+`sudo apt-get update`<br />
 `sudo apt-get install mongodb`<br />
 `sudo npm install -g deployd`
 - Start: <br />
 `cd your-todo` <br /> `dpd`
-- [Go] (http://localhost:2034)
+- [Go] (http://localhost:2403)
