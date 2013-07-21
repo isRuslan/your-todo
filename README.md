@@ -21,5 +21,6 @@ For linux, use terminal:<br />
 `sudo apt-get install mongodb`<br />
 `sudo npm install -g deployd`
 - Start: <br />
+`git clone https://github.com/isRuslan/your-todo.git` <br />
 `cd your-todo` <br /> `dpd`
 - [Go] (http://localhost:2403)
